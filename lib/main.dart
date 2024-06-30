@@ -1,5 +1,7 @@
 import 'package:ethio_gitm/firebase_options.dart';
+import 'package:ethio_gitm/screens/addPoem.dart';
 import 'package:ethio_gitm/screens/home.dart';
+import 'package:ethio_gitm/widgets/poemList.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -22,14 +24,5 @@ class MyApp extends StatelessWidget {
       ),
       home: HomePage(),
     );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }

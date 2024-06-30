@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PoemList extends StatelessWidget {
-  PoemList({super.key});
+  final author;
+  PoemList({Key? key, this.author}) : super(key: key);
   final PoemService poemService = PoemService();
 
   @override
@@ -43,7 +44,18 @@ class PoemList extends StatelessWidget {
           );
         }
 
-        List<PoemModel> poems = snapshot.data!;
+        List<PoemModel> poemss = snapshot.data!;
+        List<PoemModel> poems = [];
+        if (author == 'All') {
+          poems = poemss;
+        } else {
+          for (PoemModel p in poemss) {
+            if (p.author == author) {
+              poems.add(p);
+            }
+          }
+        }
+
         return ListView.builder(
           padding: EdgeInsets.all(8.0),
           itemCount: poems.length,

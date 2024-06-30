@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ethio_gitm/services/poemService.dart';
 
 class PoemDetail extends StatelessWidget {
   final String id;
@@ -8,7 +9,7 @@ class PoemDetail extends StatelessWidget {
   final String date;
   final String author;
 
-  const PoemDetail({
+  PoemDetail({
     Key? key,
     required this.id,
     required this.title,
@@ -17,61 +18,86 @@ class PoemDetail extends StatelessWidget {
     required this.author,
   }) : super(key: key);
 
+  final PoemService poemService = PoemService();
+
+  void _deletePoem(BuildContext context) async {
+    try {
+      await poemService.deletePoemFromFirestore('${author}_${title}');
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Poem deleted successfully!')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to delete poem: $e')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 17, 3, 3),
+        backgroundColor: Color.fromARGB(0, 0, 0, 100),
         title: Text(
-          'Poem Detail',
+          '',
           style: GoogleFonts.aBeeZee(
             textStyle: TextStyle(color: Colors.white),
           ),
         ),
         centerTitle: true,
         iconTheme: IconThemeData(color: Colors.white),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () => _deletePoem(context),
+          ),
+        ],
       ),
-      backgroundColor: Color.fromARGB(255, 17, 3, 3),
-      body: Container(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              title,
-              style: GoogleFonts.aBeeZee(
-                textStyle: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            SizedBox(height: 2),
-            Text(
-              'by $author',
-              style: GoogleFonts.lato(
-                textStyle: TextStyle(
-                  fontSize: 18,
-                  color: Colors.grey[400],
-                ),
-              ),
-            ),
-            SizedBox(height: 26),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Text(
-                  content,
-                  style: GoogleFonts.aBeeZee(
-                    textStyle: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
+      backgroundColor: Color.fromARGB(0, 0, 0, 100),
+      body: SingleChildScrollView(
+        child: Container(
+          width: double.infinity,
+          constraints: BoxConstraints(maxWidth: 600),
+          padding: const EdgeInsets.fromLTRB(16, 30, 16, 30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.aBeeZee(
+                  textStyle: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: 2),
+              Text(
+                'by $author',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.lato(
+                  textStyle: TextStyle(
+                    fontSize: 18,
+                    color: Colors.grey[400],
+                  ),
+                ),
+              ),
+              SizedBox(height: 26),
+              Text(
+                content,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.aBeeZee(
+                  textStyle: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
