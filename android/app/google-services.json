@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "88109235912",
+    "project_id": "ethio-poem",
+    "storage_bucket": "ethio-poem.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88109235912:android:012ab17ee395f9a5666ffd",
+        "android_client_info": {
+          "package_name": "com.example.ethio_gitm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbLSDh-wH6X6gekJS4jQgZilAn1hJj25g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
